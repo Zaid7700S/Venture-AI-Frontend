@@ -155,7 +155,8 @@ export default function Dashboard() {
           planMarkdown={generatedMarkdown} 
           planId={currentPlanId} 
           userId={user?.id} 
-          isGuest={isGuest} 
+          isGuest={isGuest}
+          groqApiKey={groqApiKey}
         />
       )}
 
