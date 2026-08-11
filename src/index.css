@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/* Tailwind v4 Theme Configuration */
+@theme {
+  --color-primary: #FF5B32; /* Vivid Orange Red */
+  --color-primary-dark: #E64A1F;
+  --color-cream: #FFF2CF; /* Light Cream */
+  --color-cream-dark: #FBE7B0;
+  
+  /* Modern Fluid Shadows */
+  --shadow-glow: 0 20px 40px -10px rgba(255, 91, 50, 0.25);
+  --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+
+  /* Custom Animations */
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-scale-in: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Global Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* Bulletproof PDF Print Styles */
+@media print {
+  /* 1. Reset all parent containers that might be hiding overflow */
+  html, body, 
+  #root, 
+  #root > div, 
+  #root > div > div,
+  .min-h-screen,
+  .max-w-4xl,
+  .bg-white,
+  .rounded-\[2rem\] {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    position: static !important;
+    display: block !important;
+    background: white !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* 2. Hide everything else on the page completely */
+  body * {
+    visibility: hidden;
+  }
+
+  /* 3. Make the plan document and its children visible */
+  #plan-document, 
+  #plan-document * {
+    visibility: visible;
+  }
+
+  /* 4. Position the document at the top and remove all limits */
+  #plan-document {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 5. CRITICAL FIX: Remove top margin from the very first element */
+  #plan-document > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* 6. Hide non-printable UI elements completely */
+  .no-print {
+    display: none !important;
+  }
+
+  /* 7. Prevent paragraphs and list items from splitting awkwardly across pages */
+  #plan-document p, 
+  #plan-document li, 
+  #plan-document blockquote,
+  #plan-document h1,
+  #plan-document h2,
+  #plan-document h3 {
+    page-break-inside: avoid;
+  }
+
+  /* 8. Keep headers attached to the content that follows them */
+  #plan-document h1, 
+  #plan-document h2, 
+  #plan-document h3 {
+    page-break-after: avoid;
+  }
+
+  /* 9. Set paper size and tighten margins slightly */
+  @page {
+    size: A4;
+    margin: 10mm; /* Reduced from 15mm to bring content closer to the top */
+  }
+}
