@@ -4,7 +4,7 @@ import { fetchPlanChats, saveChatMessage } from '../lib/supabaseApi';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-export default function ChatPanel({ planMarkdown, planId, userId, isGuest }) {
+export default function ChatPanel({ planMarkdown, planId, userId, isGuest,groqApiKey }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -48,7 +48,7 @@ export default function ChatPanel({ planMarkdown, planId, userId, isGuest }) {
         content: m.content
       }));
 
-      const aiResponse = await chatWithPlan(planMarkdown, userMessage, historyForApi);
+      const aiResponse = await chatWithPlan(planMarkdown, userMessage, historyForApi,groqApiKey);
       setMessages([...newMessages, { role: 'assistant', content: aiResponse }]);
 
       // Save AI response to Supabase
