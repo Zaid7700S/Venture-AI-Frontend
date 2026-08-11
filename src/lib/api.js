@@ -1,11 +1,11 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-
 export const generatePlan = async (businessIdea, location, budget, groqApiKey) => {
   const response = await fetch(`${API_URL}/generate`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-Groq-API-Key': groqApiKey // <-- SEND THE USER'S KEY HERE
     },
     body: JSON.stringify({
       business_idea: businessIdea,
@@ -22,10 +22,13 @@ export const generatePlan = async (businessIdea, location, budget, groqApiKey) =
   return await response.json();
 };
 
-export const chatWithPlan = async (planMarkdown, userMessage, chatHistory) => {
+export const chatWithPlan = async (planMarkdown, userMessage, chatHistory, groqApiKey) => {
   const response = await fetch(`${API_URL}/chat`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Groq-API-Key': groqApiKey // <-- SEND THE USER'S KEY HERE
+    },
     body: JSON.stringify({
       plan_markdown: planMarkdown,
       user_message: userMessage,
