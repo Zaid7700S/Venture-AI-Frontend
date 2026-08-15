@@ -23,7 +23,7 @@ export default function Dashboard() {
     if (isGuest) {
       const localKey = localStorage.getItem('groq_api_key');
       if (localKey) setGroqApiKey(localKey);
-      else setShowModal(true);
+      else setShowModal(true); // Show modal automatically on first load
     } else if (user) {
       supabase
         .from('profiles')
@@ -32,7 +32,7 @@ export default function Dashboard() {
         .single()
         .then(({ data }) => {
           if (data?.groq_api_key) setGroqApiKey(data.groq_api_key);
-          else setShowModal(true);
+          else setShowModal(true); // Show modal automatically if no key in DB
         });
 
       // Fetch past plans for logged-in users
@@ -41,6 +41,12 @@ export default function Dashboard() {
   }, [user, setGroqApiKey, isGuest]);
 
   const handleGenerate = async (idea, loc, budget) => {
+    // Intercept if user doesn't have a key yet
+    if (!groqApiKey) {
+      setShowModal(true);
+      return;
+    }
+
     setIsGenerating(true);
     setGeneratedMarkdown(null);
     setCurrentPlanId(null);
@@ -127,10 +133,22 @@ export default function Dashboard() {
                 <h2 className="text-2xl font-bold text-gray-900">Create New Plan</h2>
                 <p className="text-gray-500 mt-1">Generate an AI-powered feasibility study.</p>
               </div>
-              <div className="flex items-center gap-2 bg-cream-dark/40 px-4 py-2 rounded-full border border-cream-dark">
-                <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-sm font-medium text-gray-700">Groq Connected</span>
-              </div>
+              
+              {/* Dynamic Groq Connection Badge/Button */}
+              <button 
+                onClick={() => !groqApiKey && setShowModal(true)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors ${
+                  groqApiKey 
+                    ? 'bg-cream-dark/40 border-cream-dark cursor-default' 
+                    : 'bg-primary/10 border-primary/30 hover:bg-primary/20 cursor-pointer'
+                }`}
+              >
+                <span className={`w-2.5 h-2.5 rounded-full animate-pulse ${groqApiKey ? 'bg-green-500' : 'bg-primary'}`}></span>
+                <span className={`text-sm font-medium ${groqApiKey ? 'text-gray-700' : 'text-primary'}`}>
+                  {groqApiKey ? 'Groq Connected' : 'Connect Groq'}
+                </span>
+              </button>
+
             </div>
           )}
 
