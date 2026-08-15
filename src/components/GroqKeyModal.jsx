@@ -23,7 +23,7 @@ export default function GroqKeyModal({ userId, onClose }) {
         if (error) throw error;
       }
       setGroqApiKey(apiKey);
-      onClose(); // Close the modal upon successful save
+      onClose();
     } catch (e) {
       setError("Failed to save key. Please try again.");
     } finally {
@@ -49,7 +49,7 @@ export default function GroqKeyModal({ userId, onClose }) {
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-          </div>
+          </button>
 
           <div className="relative z-10">
             <div className="inline-block p-3 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 border border-white/30">
