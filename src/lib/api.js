@@ -1,5 +1,24 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
+if (!import.meta.env.VITE_API_URL && import.meta.env.PROD) {
+  console.error(
+    'VITE_API_URL is not set in this production build — API calls will ' +
+    'try to hit http://localhost:8000, which will fail for real users. ' +
+    'Set VITE_API_URL in your deployment environment.'
+  );
+}
+
+// Never throws itself, even if the response body isn't JSON (e.g. a raw
+// 502/504 from a proxy in front of the backend) - always returns a usable message.
+const safeParseErrorMessage = async (response, fallback) => {
+  try {
+    const data = await response.json();
+    return data.detail || data.error || fallback;
+  } catch {
+    return `${fallback} (server returned status ${response.status})`;
+  }
+};
+
 export const generatePlan = async (businessIdea, location, budget, groqApiKey) => {
   const response = await fetch(`${API_URL}/generate`, {
     method: 'POST',
@@ -15,8 +34,7 @@ export const generatePlan = async (businessIdea, location, budget, groqApiKey) =
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.detail || 'Failed to generate plan');
+    throw new Error(await safeParseErrorMessage(response, 'Failed to generate plan'));
   }
   
   return await response.json();
@@ -36,7 +54,9 @@ export const chatWithPlan = async (planMarkdown, userMessage, chatHistory, groqA
     })
   });
 
-  if (!response.ok) throw new Error('Chat failed');
+  if (!response.ok) {
+    throw new Error(await safeParseErrorMessage(response, 'Chat failed'));
+  }
   const data = await response.json();
   return data.response;
 };
