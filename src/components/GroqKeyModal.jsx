@@ -17,9 +17,9 @@ export default function GroqKeyModal({ userId, onClose }) {
       if (isGuest) {
         localStorage.setItem('groq_api_key', apiKey);
       } else {
-        const { error } = await supabase
-          .from('profiles')
-          .upsert({ id: userId, groq_api_key: apiKey });
+        // Encrypted server-side in Supabase Vault via the save_groq_key()
+        // function — the raw key is never written to a plaintext column.
+        const { error } = await supabase.rpc('save_groq_key', { new_key: apiKey });
         if (error) throw error;
       }
       setGroqApiKey(apiKey);

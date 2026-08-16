@@ -25,13 +25,12 @@ export default function Dashboard() {
       if (localKey) setGroqApiKey(localKey);
       else setShowModal(true); // Show modal automatically on first load
     } else if (user) {
+      // Fetches the decrypted key via a security-definer function — the
+      // client never selects the plaintext/vault-ref column directly.
       supabase
-        .from('profiles')
-        .select('groq_api_key')
-        .eq('id', user.id)
-        .single()
+        .rpc('get_groq_key')
         .then(({ data }) => {
-          if (data?.groq_api_key) setGroqApiKey(data.groq_api_key);
+          if (data) setGroqApiKey(data);
           else setShowModal(true); // Show modal automatically if no key in DB
         });
 
