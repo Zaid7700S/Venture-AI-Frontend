@@ -67,10 +67,10 @@ export default function ChatPanel({ planMarkdown, planId, userId, isGuest,groqAp
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-8 right-8 z-50 w-16 h-16 bg-primary text-white rounded-full shadow-glow flex items-center justify-center hover:scale-110 transition-transform active:scale-95 animate-scale-in"
+          className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 w-14 h-14 sm:w-16 sm:h-16 bg-primary text-white rounded-full shadow-glow flex items-center justify-center hover:scale-110 transition-transform active:scale-95 animate-scale-in"
           aria-label="Open Chat"
         >
-          <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z" />
           </svg>
           {messages.length === 0 && (
@@ -80,22 +80,22 @@ export default function ChatPanel({ planMarkdown, planId, userId, isGuest,groqAp
       )}
 
       {isOpen && (
-        <div className="fixed bottom-8 right-8 z-50 w-[calc(100vw-4rem)] sm:w-96 h-[60vh] sm:h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden animate-scale-in">
-          <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-cream/30">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-glow">
+        <div className="fixed inset-x-0 bottom-0 sm:inset-auto sm:bottom-8 sm:right-8 z-50 w-full sm:w-96 h-[85vh] sm:h-[500px] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden animate-scale-in">
+          <div className="p-3 sm:p-4 border-b border-gray-100 flex items-center justify-between bg-cream/30 flex-shrink-0">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-primary rounded-xl flex items-center justify-center shadow-glow flex-shrink-0">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z" /></svg>
               </div>
-              <div>
-                <h3 className="font-bold text-gray-900 text-sm">Chat with your Plan</h3>
-                <p className="text-xs text-gray-500">
+              <div className="min-w-0">
+                <h3 className="font-bold text-gray-900 text-sm truncate">Chat with your Plan</h3>
+                <p className="text-xs text-gray-500 truncate">
                   {isGuest ? "History not saved for guests" : "History saved to your account"}
                 </p>
               </div>
             </div>
             <button 
               onClick={() => setIsOpen(false)}
-              className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
@@ -164,7 +164,7 @@ export default function ChatPanel({ planMarkdown, planId, userId, isGuest,groqAp
                 }}
                 placeholder="Ask about this plan..."
                 rows="1"
-                className="flex-1 p-3 bg-cream/30 border border-gray-200 rounded-xl outline-none transition-all duration-300 focus:ring-4 focus:ring-primary/20 focus:border-primary focus:bg-white resize-none text-sm"
+                className="flex-1 p-3 bg-cream/30 border border-gray-200 rounded-xl outline-none transition-all duration-300 focus:ring-4 focus:ring-primary/20 focus:border-primary focus:bg-white resize-none text-base sm:text-sm"
               />
               <button 
                 onClick={handleSend}

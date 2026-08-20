@@ -32,11 +32,11 @@ export default function GroqKeyModal({ userId, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
-      <div className="bg-white rounded-[2rem] max-w-xl w-full shadow-2xl animate-scale-in relative overflow-hidden">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-0 sm:p-4 animate-fade-in">
+      <div className="bg-white rounded-none sm:rounded-[2rem] max-w-xl w-full h-full sm:h-auto shadow-2xl animate-scale-in relative overflow-y-auto sm:overflow-hidden sm:max-h-[90vh]">
         
         {/* Header Section with Gradient */}
-        <div className="bg-gradient-to-br from-primary to-primary-dark p-8 text-center relative overflow-hidden">
+        <div className="bg-gradient-to-br from-primary to-primary-dark p-6 sm:p-8 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-black/10 rounded-full blur-2xl -ml-10 -mb-10"></div>
           
@@ -53,11 +53,11 @@ export default function GroqKeyModal({ userId, onClose }) {
 
           <div className="relative z-10">
             <div className="inline-block p-3 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 border border-white/30">
-              <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white">Connect your Groq Account</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">Connect your Groq Account</h2>
             <p className="text-white/80 mt-2 text-sm max-w-sm mx-auto">
               We use your own Groq API key to power the ultra-fast AI agents. It is stored securely and never exposed.
             </p>
@@ -65,7 +65,7 @@ export default function GroqKeyModal({ userId, onClose }) {
         </div>
 
         {/* Body Section */}
-        <div className="p-8 bg-cream/30">
+        <div className="p-6 sm:p-8 bg-cream/30">
           <a 
             href="https://console.groq.com/keys" 
             target="_blank" 
@@ -88,7 +88,7 @@ export default function GroqKeyModal({ userId, onClose }) {
               placeholder="gsk_..." 
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              className="w-full px-5 py-4 bg-white border border-gray-200 rounded-xl outline-none transition-all duration-300 focus:ring-4 focus:ring-primary/20 focus:border-primary text-gray-800 font-mono text-sm shadow-sm"
+              className="w-full px-5 py-4 bg-white border border-gray-200 rounded-xl outline-none transition-all duration-300 focus:ring-4 focus:ring-primary/20 focus:border-primary text-gray-800 font-mono text-base sm:text-sm shadow-sm"
             />
             {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
           </div>
